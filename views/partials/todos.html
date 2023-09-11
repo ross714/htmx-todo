@@ -1,0 +1,25 @@
+<div id="todos" class="flex flex-row justify-center pt-3">
+  <div class="w-full sm:w-96 md:flex md:grid md:grid-cols-1 space-y-3">
+    {{range .Todos}}
+      <div class="flex justify-between items-center h-24 bg-neutral-800 text-white rounded-lg pl-6 pr-6 shadow-lg">
+        <div class="flex flex-col">
+          <a>{{.Name}}</a>
+          <a class="text-gray-400">{{.Description}}</a>
+        </div>
+        <div>
+          <a class="text-gray-400">{{.Date}}</a>
+          <button
+            hx-post="/delete"
+            hx-vals='{"name": "{{.Name}}"}'
+            hx-target="#todos" 
+            hx-swap="outerHTML"
+          >
+            <a class="pl-2 w-5 text-red-600 text-xl">
+              x
+            </a>
+          </button>
+        </div>
+      </div>
+    {{end}}
+  </div>
+</div>
