@@ -7,7 +7,7 @@
     </div>
     <div>
       <button
-        class="bg-neutral-700 w-16 h-8 rounded shadow-lg"
+        class="bg-neutral-700 w-24 h-8 rounded shadow-lg"
         hx-post="/add"
         hx-include="[name='name'],[name='description']"
         hx-target="#todos" 
@@ -29,7 +29,7 @@
       placeholder="search..." 
       autocomplete=off
       hx-post="/search" 
-      hx-trigger="keyup changed delay:500ms, search" 
+      hx-trigger="keyup changed delay:50ms, search" 
       hx-target="#todos" 
       hx-swap="outerHTML"
     >

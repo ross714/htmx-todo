@@ -8,10 +8,6 @@ import (
 	"github.com/gofiber/template/html/v2"
 )
 
-type List struct {
-	Todos []*Todo
-}
-
 type Todo struct {
 	Name        string
 	Description string
@@ -31,23 +27,21 @@ func todo(c *fiber.Ctx, todos []*Todo) error {
 }
 
 func main() {
-	list := List{
-		Todos: []*Todo{
-			{
-				Name:        "clara bday",
-				Description: "this is description",
-				Date:        "12-11-23",
-			},
-			{
-				Name:        "feed the dawg",
-				Description: "",
-				Date:        "09-11-23",
-			},
-			{
-				Name:        "do homework",
-				Description: "chemistry class",
-				Date:        "01-09-09",
-			},
+	list := []*Todo{
+		{
+			Name:        "clara bday",
+			Description: "this is description",
+			Date:        "12-11-23",
+		},
+		{
+			Name:        "feed the dawg",
+			Description: "",
+			Date:        "09-11-23",
+		},
+		{
+			Name:        "do homework",
+			Description: "chemistry class",
+			Date:        "01-09-09",
 		},
 	}
 
@@ -58,7 +52,7 @@ func main() {
 
 	// Controllers
 	app.Get("/", func(c *fiber.Ctx) error {
-		return index(c, list.Todos)
+		return index(c, list)
 	})
 
 	app.Post("/add", func(c *fiber.Ctx) error {
@@ -71,29 +65,29 @@ func main() {
 			Date:        time.Now().Format("01-02-06"),
 		}
 
-		list.Todos = append(list.Todos, add)
+		list = append(list, add)
 
-		return todo(c, list.Todos)
+		return todo(c, list)
 	})
 
 	app.Post("/delete", func(c *fiber.Ctx) error {
 		name := c.FormValue("name")
 
-		for i := 0; i < len(list.Todos); i++ {
-			if list.Todos[i].Name == name {
-				list.Todos = append(list.Todos[:i], list.Todos[i+1:]...)
+		for i := 0; i < len(list); i++ {
+			if list[i].Name == name {
+				list = append(list[:i], list[i+1:]...)
 				break
 			}
 		}
 
-		return todo(c, list.Todos)
+		return todo(c, list)
 	})
 
 	app.Post("/search", func(c *fiber.Ctx) error {
 		search := c.FormValue("search")
 		result := []*Todo{}
 
-		for _, todo := range list.Todos {
+		for _, todo := range list {
 			if strings.Contains(todo.Name, search) {
 				result = append(result, todo)
 			}
