@@ -59,6 +59,10 @@ func main() {
 		name := c.FormValue("name")
 		description := c.FormValue("description")
 
+		if name == "" || description == "" {
+			return c.SendStatus(400)
+		}
+
 		add := &Todo{
 			Name:        name,
 			Description: description,

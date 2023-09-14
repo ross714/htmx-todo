@@ -2,22 +2,33 @@
 <div class="flex flex-row justify-center">
   <div class="flex flex-col md:flex-row justify-center space-y-3 md:space-y-0 md:justify-between items-center h-36 md:h-24 w-full sm:w-96 bg-neutral-800 text-white rounded-lg pl-6 pr-6 shadow-lg">
     <div class="flex flex-col space-y-2 w-full md:w-48">
-      <input class="bg-neutral-700 rounded pl-3 pr-3 shadow-lg" type="text" name="name" placeholder="name" autocomplete=off required />
+      <input class="bg-neutral-700 rounded pl-3 pr-3 shadow-lg" type="text" name="name" id="input" placeholder="name*" autocomplete=off />
       <input class="bg-neutral-700 rounded pl-3 pr-3 shadow-lg" type="text" name="description" placeholder="description" autocomplete=off  />
     </div>
     <div>
       <button
+        id="button"
         class="bg-neutral-700 w-24 h-8 rounded shadow-lg"
         hx-post="/add"
         hx-include="[name='name'],[name='description']"
         hx-target="#todos" 
         hx-swap="outerHTML"
+        disabled
       > 
         add
       </button>
     </div>
   </div>
 </div>
+
+<script>
+  const input = document.getElementById("input");
+  const btn = document.getElementById("button");
+
+  input.addEventListener("input", function() {
+    btn.disabled = (this.value === "");
+  })
+</script>
 
 <!--// Search -->
 <div class="flex flex-row justify-center pt-3">
